@@ -4,29 +4,26 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class FavoritesTests extends TestBase{
-
-    @Test(priority =  1)
+    @Test(priority = 1)
     public void testAddToFavorites(){
-        app.findArticle("Formula 1");
-        app.addToFavorites();
+        app.findArticle("Mustang shelby");
+        app.addToFavorits();
         app.closeArticle();
-        app.goToFavorites();
-        app.openMyList();
-        app.checkArticlePresent();
+
+        app.openMyLists();
         Assert.assertTrue(app.checkArticlePresent());
-        //Assert.assertEquals(app.getArticleName(), "Henry Ford");
+        //Assert.assertEquals(app.getArticleName(), "Appium");
     }
 
-
-    @Test (priority = 2)
+    @Test(priority = 2)
     public void testRemoveFromFavorites(){
-        app.openMyList();
+        app.openMyLists();
         app.checkArticlePresent();
-        //goToFavorites
-        //openMyList
-        //checkArticlePresent
-        //deleteArticle (swipeToLeft)
-        //checkListIsEmpty
+
+        //DeleteAtticle (swipeToLeft)
+        //CheckListIsEmpty
+
+
 
     }
 }

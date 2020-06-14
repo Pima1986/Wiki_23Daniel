@@ -23,6 +23,7 @@ public class AppManager {
         capabilities.setCapability("automationName", "Appium");
         capabilities.setCapability("appPackage", "org.wikipedia");
         capabilities.setCapability("appActivity", ".main.MainActivity");
+
         capabilities.setCapability("app", "C:/Users/Daniel/Documents/GitHub/Wiki_23Daniel/apk/org.wikipedia.apk");
 
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
@@ -37,15 +38,15 @@ public class AppManager {
         click(By.xpath("//*[@resource-id='org.wikipedia:id/search_container']"));
         typeTextForSearch(text);
         selectArticle();
+
     }
 
     public void selectArticle() {
-        waitForElementAndClick(By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title']"), 20);
+        waitForElementAndClick(By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']"), 20);
     }
 
     public void typeTextForSearch(String text) {
-        waitForElementAndType(By.xpath("//*[@resource-id='org.wikipedia:id/search_src_text']"), 5, text);
-
+        waitForElementAndType(By.xpath("//*[@resource-id='org.wikipedia:id/search_src_text']"), 3, text);
     }
 
     private void waitForElementAndType(By locator, int timeout, String text) {
@@ -58,39 +59,38 @@ public class AppManager {
         driver.findElement(locator).click();
     }
 
-    public void waitForElementAndClick(By locator, int timeout) {
-        new WebDriverWait(driver, timeout).until(ExpectedConditions.presenceOfElementLocated(locator)).click();
+    public void waitForElementAndClick(By locator, int timeout){
+        new WebDriverWait(driver, timeout)
+                .until(ExpectedConditions.presenceOfElementLocated(locator)).click();
     }
 
-    public void addToFavorites() {
+    public void addToFavorits() {
         initAddToFavorites();
-        if(isElementPresent(By.xpath("//*[@resource-id='org.wikipedia:id/onboarding_container']"))) {
+        if(isElementPresent(By.xpath("//*[@resource-id='org.wikipedia:id/onboarding_button']"))){
+            clickGotItButton();
         }
-        clickGotItButton();
-        createList();
-        clickOK();
+        createList("MyList");
+        clickOk();
     }
 
-    public void clickOK() {
+    private void clickOk() {
         click(By.xpath("//*[@resource-id='android:id/button1']"));
     }
 
-    public void createList() {
-        waitForElementAndType(By.xpath("//*[@resource-id='org.wikipedia:id/text_input']"), 20, "My_List");
-
-
+    private void createList(String listName) {
+        waitForElementAndType(By.xpath("//*[@resource-id='org.wikipedia:id/text_input']"), 20, listName);
     }
 
     public boolean isElementPresent(By locator) {
-        return driver.findElements(locator).size() > 0;
+        return driver.findElements(locator).size()>0;
     }
 
+    private void clickGotItButton() {
 
-    public void clickGotItButton() {
-        waitForElementAndClick(By.xpath("//*[@resource-id='org.wikipedia:id/onboarding_button']"), 20);
+        click(By.xpath("//*[@resource-id='org.wikipedia:id/onboarding_button']"));
     }
 
-    public void initAddToFavorites() {
+    private void initAddToFavorites() {
         waitForElementAndClick(By.xpath("//*[@content-desc='Add this article to a reading list']"), 20);
     }
 
@@ -99,23 +99,18 @@ public class AppManager {
 
     }
 
-    public void goToFavorites() {
-        waitForElementAndClick(By.xpath("//*[@resources-id='org.wikipedia:id/icon'"), 20);
-    }
-
-    public void openMyList() {
+    public void openMyLists() {
+        click(By.xpath("//*[@content-desc='My lists']"));
         waitForElementAndClick(By.xpath("//*[@resource-id='org.wikipedia:id/item_container']"), 10);
-        //waitForElementAndClick(By.xpath("//*[@contains(text(), 'My_List']/../../.."), 10);
-
+        // waitForElementAndClick(By.xpath("//*[contains(text(), 'MyList')]/../../../.."), 10);
     }
 
     public boolean checkArticlePresent() {
-        return isElementPresent(By.xpath("[@resource-id='org.wikipedia:id/page_list_item_container']"));
+        return isElementPresent(By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']"));
     }
 
     public String getArticleName() {
         return driver.findElement(By
-                .xpath("[@resource-id='org.wikipedia:id/page_list_item_container']")).getText();
-
+                .xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']")).getText();
     }
 }

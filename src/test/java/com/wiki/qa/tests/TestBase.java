@@ -7,16 +7,15 @@ import org.testng.annotations.BeforeSuite;
 import java.net.MalformedURLException;
 
 public class TestBase {
-   protected static AppManager app = new AppManager();
+    protected  static AppManager app = new AppManager();
 
     @BeforeSuite
     public void setUp() throws MalformedURLException {
         app.init();
-
     }
 
     @AfterSuite(enabled = false)
-    public  void tearDown(){
+    public void tearDown(){
         app.stop();
     }
 }
