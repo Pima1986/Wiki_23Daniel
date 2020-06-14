@@ -44,7 +44,7 @@ public class AppManager {
     }
 
     public void typeTextForSearch(String text) {
-        waitForElementAndType(By.xpath("//*[@resource-id='org.wikipedia:id/search_src_text']"), 3000, text);
+        waitForElementAndType(By.xpath("//*[@resource-id='org.wikipedia:id/search_src_text']"), 5, text);
 
     }
 
@@ -64,7 +64,7 @@ public class AppManager {
 
     public void addToFavorites() {
         initAddToFavorites();
-        if (isElementPresent(By.xpath("//*[@resource-id='org.wikipedia:id/onboarding_container']"))) {
+        if(isElementPresent(By.xpath("//*[@resource-id='org.wikipedia:id/onboarding_container']"))) {
         }
         clickGotItButton();
         createList();
@@ -90,16 +90,17 @@ public class AppManager {
         waitForElementAndClick(By.xpath("//*[@resource-id='org.wikipedia:id/onboarding_button']"), 20);
     }
 
-    private void initAddToFavorites() {
+    public void initAddToFavorites() {
         waitForElementAndClick(By.xpath("//*[@content-desc='Add this article to a reading list']"), 20);
     }
 
     public void closeArticle() {
         click(By.xpath("//*[@content-desc='Navigate up']"));
+
     }
 
     public void goToFavorites() {
-        click(By.xpath("//*[@content-desc='My lists'"));
+        waitForElementAndClick(By.xpath("//*[@resources-id='org.wikipedia:id/icon'"), 20);
     }
 
     public void openMyList() {
